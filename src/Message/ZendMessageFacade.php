@@ -29,7 +29,10 @@ class ZendMessageFacade
         $zendMessage = new \Zend\Mail\Message();
         $zendMessage
             ->addTo($message->getTo())
-            ->addFrom($message->getFrom())
+            ->addFrom(
+                self::getFromEmail($message->getFrom()),
+                self::getFromName($message->getFrom())
+            )
             ->setSubject($message->getSubject())
             ->setBody($body)
             ->setEncoding(self::ENCODING)
@@ -43,5 +46,23 @@ class ZendMessageFacade
         }
 
         return $zendMessage;
+    }
+
+    private static function getFromEmail($from)
+    {
+        if (preg_match('/(.*) <(.*)>/', $from, $regs)) {
+            // match Sender <email@example.com>
+            return $regs[2];
+        }
+        return $from;
+    }
+
+    private static function getFromName($from)
+    {
+        if (preg_match('/(.*) <(.*)>/', $from, $regs)) {
+            // match Sender <email@example.com>
+            return $regs[1];
+        }
+        return null;
     }
 }
