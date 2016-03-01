@@ -32,6 +32,9 @@ class Smtp implements TransportInterface
         if (!isset($options['params']['port'])) {
             throw new \InvalidArgumentException('port not defined');
         }
+        if (!isset($options['params']['connection_class'])) {
+            throw new \InvalidArgumentException('connection_class not defined');
+        }
         if (!isset($options['params']['connection_config']['ssl'])) {
             throw new \InvalidArgumentException('ssl not defined');
         }
