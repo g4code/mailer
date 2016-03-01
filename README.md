@@ -14,14 +14,6 @@ composer require g4/mailer
 
 ```php
 <?php 
-// Create message
-$message = new \G4\Mailer\Message(
-    'receiver@example.com',
-    'sender@example.com',
-    'Email subject',
-    'This is a <strong>html</strong> email part',
-    'This is a text email part'
-);
 
 // Config data
 $options = [
@@ -39,11 +31,20 @@ $options = [
     ]
 ];
 
+// Create message
+$message = new \G4\Mailer\Message(
+    'receiver@example.com',
+    'sender@example.com',
+    'Email subject',
+    'This is a <strong>html</strong> email part',
+    'This is a text email part'
+);
+
 // Create mailer instance
 $mailer = \G4\Mailer\Mailer::factory($options);
 
 // send message
-$mailer->send($this->message);
+$mailer->send($message);
 
 ?>
 ```
