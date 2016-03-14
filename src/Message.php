@@ -21,6 +21,7 @@ class Message
     private $bcc;
 
     private $from;
+    private $replyTo;
     private $subject;
     private $htmlBody;
     private $textBody;
@@ -58,6 +59,14 @@ class Message
     public function getBcc()
     {
         return $this->bcc;
+    }
+
+    /**
+     * @return string
+     */
+    public function getReplyTo()
+    {
+        return $this->replyTo;
     }
 
     /**
@@ -120,6 +129,12 @@ class Message
     public function addBcc($recipient)
     {
         $this->bcc[] = $recipient;
+        return $this;
+    }
+
+    public function setReplyTo($recipient)
+    {
+        $this->replyTo = $recipient;
         return $this;
     }
 

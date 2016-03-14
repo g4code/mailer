@@ -30,8 +30,8 @@ class ZendMessageFacade
         $zendMessage
             ->addTo($message->getTo())
             ->addFrom(
-                self::getFromEmail($message->getFrom()),
-                self::getFromName($message->getFrom())
+                self::getEmailPart($message->getFrom()),
+                self::getNamePart($message->getFrom())
             )
             ->setSubject($message->getSubject())
             ->setBody($body)
@@ -44,11 +44,17 @@ class ZendMessageFacade
         if (count($message->getBcc())) {
             $zendMessage->addBcc($message->getBcc());
         }
+        if ($message->getReplyTo()) {
+            $zendMessage->setReplyTo(
+                self::getEmailPart($message->getReplyTo()),
+                self::getNamePart($message->getReplyTo())
+            );
+        }
 
         return $zendMessage;
     }
 
-    private static function getFromEmail($from)
+    private static function getEmailPart($from)
     {
         if (preg_match('/(.*) <(.*)>/', $from, $regs)) {
             // match Sender <email@example.com>
@@ -57,7 +63,7 @@ class ZendMessageFacade
         return $from;
     }
 
-    private static function getFromName($from)
+    private static function getNamePart($from)
     {
         if (preg_match('/(.*) <(.*)>/', $from, $regs)) {
             // match Sender <email@example.com>
