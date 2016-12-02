@@ -50,6 +50,9 @@ class ZendMessageFacade
                 self::getNamePart($message->getReplyTo())
             );
         }
+        if ($message->hasHeaders()) {
+            $zendMessage->getHeaders()->addHeaders($message->getHeaders());
+        }
 
         return $zendMessage;
     }

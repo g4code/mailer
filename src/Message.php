@@ -19,6 +19,11 @@ class Message
      * @var array
      */
     private $bcc;
+    
+    /**
+     * @var array
+     */
+    private $headers;
 
     private $from;
     private $replyTo;
@@ -31,6 +36,7 @@ class Message
         $this->to[] = $to;
         $this->cc = [];
         $this->bcc = [];
+        $this->headers = [];
         $this->from = $from;
         $this->subject = $subject;
         $this->htmlBody = $htmlBody;
@@ -59,6 +65,22 @@ class Message
     public function getBcc()
     {
         return $this->bcc;
+    }
+    
+    /**
+     * @return array
+     */
+    public function getHeaders()
+    {
+        return $this->headers;
+    }
+    
+    /**
+     * @return bool
+     */
+    public function hasHeaders()
+    {
+        return count($this->headers) > 0;
     }
 
     /**
@@ -129,6 +151,26 @@ class Message
     public function addBcc($recipient)
     {
         $this->bcc[] = $recipient;
+        return $this;
+    }
+    
+    /**
+     * @param $header
+     * @return $this
+     */
+    public function addHeader($header)
+    {
+        $this->headers[] = $header;
+        return $this;
+    }
+    
+    /**
+     * @param array $headers
+     * @return $this
+     */
+    public function setHeaders(array $headers)
+    {
+        $this->headers = $headers;
         return $this;
     }
 
