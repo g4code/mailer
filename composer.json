@@ -28,6 +28,6 @@
   },
   "require": {
     "php": ">=5.3.3",
-    "zendframework/zend-mail": "2.3.7"
+    "zendframework/zend-mail": "2.7.2"
   }
 }
