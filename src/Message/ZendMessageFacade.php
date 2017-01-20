@@ -33,6 +33,10 @@ class ZendMessageFacade
                 self::getEmailPart($message->getFrom()),
                 self::getNamePart($message->getFrom())
             )
+            ->setSender(
+                self::getEmailPart($message->getFrom()),
+                self::getNamePart($message->getFrom())
+            )
             ->setSubject($message->getSubject())
             ->setBody($body)
             ->setEncoding(self::ENCODING)
@@ -70,7 +74,7 @@ class ZendMessageFacade
     {
         if (preg_match('/(.*) <(.*)>/', $from, $regs)) {
             // match Sender <email@example.com>
-            return $regs[1];
+            return trim($regs[1]);
         }
         return null;
     }
