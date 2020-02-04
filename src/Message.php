@@ -30,6 +30,7 @@ class Message
     private $subject;
     private $htmlBody;
     private $textBody;
+    private $logId;
 
     public function __construct($to, $from, $subject, $htmlBody, $textBody='')
     {
@@ -180,4 +181,21 @@ class Message
         return $this;
     }
 
+    /**
+     * @param string $logId
+     * @return $this
+     */
+    public function setLogId($logId)
+    {
+        $this->logId = $logId;
+        return $this;
+    }
+
+    /**
+     * @return string | null
+     */
+    public function getLogId()
+    {
+        return $this->logId ?: null;
+    }
 }
