@@ -4,6 +4,8 @@ namespace G4\Mailer\Message\MailerQ\Rest;
 
 class MessageFacade
 {
+    const HEADER_MAILERQ_LOGID = 'x-nd-mailerlogid';
+
     /**
      * @param \G4\Mailer\Message $message
      * @param array $options
@@ -33,6 +35,10 @@ class MessageFacade
                 ]
             ]
         ];
+
+        if ($message->getLogId()) {
+            $body['mime']['headers'][self::HEADER_MAILERQ_LOGID] = $message->getLogId();
+        }
 
         $headers = [
             'Content-Type: application/json',
