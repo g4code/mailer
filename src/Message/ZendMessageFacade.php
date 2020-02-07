@@ -23,6 +23,7 @@ class ZendMessageFacade
         $textPart = new \Zend\Mime\Part($message->getTextBody());
         $textPart->charset = self::ENCODING;
         $textPart->type = self::TYPE_TEXT;
+        $textPart->encoding = \Zend\Mime\Mime::ENCODING_QUOTEDPRINTABLE;
 
         $body = new \Zend\Mime\Message();
         $body->setParts([$textPart, $htmlPart]);
