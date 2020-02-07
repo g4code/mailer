@@ -17,6 +17,7 @@ class MessageFacade
             'envelope'  => $message->getFrom(),
             'recipient' => is_array($message->getTo())? $message->getTo()[0] : $message->getTo(),
             'tags'    => self::getTags($message->getHeaders()),
+            'inlinecss' => true,
             'mime'      => [
                 'from'    => $message->getFrom(),
                 'to'      => $message->getTo(),
@@ -25,14 +26,7 @@ class MessageFacade
                 'cc'      => $message->getCc(),
                 'bcc'     => $message->getBcc(),
                 'replyTo' => $message->getReplyTo(),
-                'content' => [
-                    'blocks' => [
-                        [
-                            'type'    => 'html',
-                            'content' => $message->getHtmlBody(),
-                        ],
-                    ]
-                ]
+                'content' => $message->getHtmlBody(),
             ]
         ];
 
