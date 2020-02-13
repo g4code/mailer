@@ -5,6 +5,7 @@ namespace G4\Mailer\Message\MailerQ\Rest;
 class MessageFacade
 {
     const HEADER_MAILERQ_LOGID = 'x-nd-mailerlogid';
+    const HEADER_LIST_UNSUBSCRIBE = 'List-Unsubscribe';
 
     /**
      * @param \G4\Mailer\Message $message
@@ -39,6 +40,10 @@ class MessageFacade
             'Content-Length: ' . strlen(json_encode($body)),
             "Authorization: Bearer ". $options['params']['token'],
         ];
+
+        if ($message->getListUnsubscribe()) {
+            $body['mime']['headers'][self::HEADER_LIST_UNSUBSCRIBE] = $message->getListUnsubscribe();
+        }
 
         $url = $options['params']['url'];
 

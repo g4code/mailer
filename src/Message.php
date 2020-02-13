@@ -32,6 +32,11 @@ class Message
     private $textBody;
     private $logId;
 
+    /**
+     * @var array
+     */
+    private $unsubscribeOptions;
+
     public function __construct($to, $from, $subject, $htmlBody, $textBody='')
     {
         $this->to[] = $to;
@@ -45,7 +50,7 @@ class Message
     }
 
     /**
-     * @return string
+     * @return array
      */
     public function getTo()
     {
@@ -197,5 +202,27 @@ class Message
     public function getLogId()
     {
         return $this->logId ?: null;
+    }
+
+    /**
+     * @param array $options Array of email or href that is used to unsubscribe user
+     */
+    public function setUnsubscribeOptions(array $options)
+    {
+        $this->unsubscribeOptions = $options;
+    }
+
+    /**
+     * @return string | null
+     */
+    public function getListUnsubscribe()
+    {
+        if ($this->unsubscribeOptions === null) {
+            return null;
+        }
+        $links = array_map(function($link) {
+            return '<' . $link . '>';
+        }, $this->unsubscribeOptions);
+        return implode(', ', $links);
     }
 }
