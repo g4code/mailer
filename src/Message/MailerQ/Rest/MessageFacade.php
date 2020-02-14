@@ -35,15 +35,15 @@ class MessageFacade
             $body['mime']['headers'][self::HEADER_MAILERQ_LOGID] = $message->getLogId();
         }
 
-        $headers = [
-            'Content-Type: application/json',
-            'Content-Length: ' . strlen(json_encode($body)),
-            "Authorization: Bearer ". $options['params']['token'],
-        ];
-
         if ($message->getListUnsubscribe()) {
             $body['mime']['headers'][self::HEADER_LIST_UNSUBSCRIBE] = $message->getListUnsubscribe();
         }
+
+        $headers = [
+            'Content-Type: application/json',
+            'Content-Length: ' . strlen(json_encode($body)),
+            'Authorization: Bearer ' . $options['params']['token'],
+        ];
 
         $url = $options['params']['url'];
 
