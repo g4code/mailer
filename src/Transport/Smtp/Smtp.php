@@ -2,7 +2,7 @@
 
 namespace G4\Mailer\Transport\Smtp;
 
-use G4\Mailer\Exception\SmtpException;
+use G4\Mailer\Exception\SmtpEmailNotSentException;
 use G4\Mailer\Message\ZendMessageFacade;
 use G4\Mailer\Transport\TransportInterface;
 
@@ -25,7 +25,7 @@ class Smtp implements TransportInterface
         try {
             $transport->send(ZendMessageFacade::convert($message));
         } catch (\Zend\Mail\Transport\Exception\RuntimeException $e) {
-            throw new SmtpException($e->getMessage(), $e->getCode());
+            throw new SmtpEmailNotSentException($e->getMessage(), $e->getCode());
         }
     }
 

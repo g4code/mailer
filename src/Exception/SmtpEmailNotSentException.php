@@ -2,7 +2,7 @@
 
 namespace  G4\Mailer\Exception;
 
-class SmtpException extends EmailNotSent
+class SmtpEmailNotSentException extends EmailNotSentException
 {
     public function __construct($message, $code = 0, \Exception $previous = null)
     {
