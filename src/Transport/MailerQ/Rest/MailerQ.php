@@ -3,6 +3,7 @@
 namespace G4\Mailer\Transport\MailerQ\Rest;
 
 use G4\Mailer\Client\CurlHttpClient;
+use G4\Mailer\Exception\MailerqMailNotSentException;
 use G4\Mailer\Transport\TransportInterface;
 use G4\Mailer\Message\MailerQ\Rest\MessageFacade;
 
@@ -23,7 +24,7 @@ class MailerQ implements TransportInterface
             (new CurlHttpClient())->post($mailerQMessage->getBody(), $mailerQMessage->getHeaders(), $mailerQMessage->getUrl());
         } catch (\Exception $exception) {
             if ($exception->getMessage() !== sprintf('Empty response from %s', $this->options['params']['url'])) {
-                throw  new \RuntimeException(sprintf('Email not sent. Reason: %s', $exception->getMessage()));
+                throw new MailerqMailNotSentException(sprintf('Email not sent. Reason: %s', $exception->getMessage()), $exception->getCode());
             }
         }
     }

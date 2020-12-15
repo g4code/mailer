@@ -2,6 +2,7 @@
 
 namespace G4\Mailer\Transport\Smtp;
 
+use G4\Mailer\Exception\SmtpEmailNotSentException;
 use G4\Mailer\Message\ZendMessageFacade;
 use G4\Mailer\Transport\TransportInterface;
 
@@ -21,7 +22,11 @@ class Smtp implements TransportInterface
         // todo adapter will instantiate transport other than smtp
         $transport = new \Zend\Mail\Transport\Smtp($options);
 
-        $transport->send(ZendMessageFacade::convert($message));
+        try {
+            $transport->send(ZendMessageFacade::convert($message));
+        } catch (\Zend\Mail\Transport\Exception\RuntimeException $e) {
+            throw new SmtpEmailNotSentException($e->getMessage(), $e->getCode());
+        }
     }
 
     private function setOptions($options)
