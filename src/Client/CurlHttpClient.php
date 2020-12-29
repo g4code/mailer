@@ -4,6 +4,7 @@ namespace G4\Mailer\Client;
 
 class CurlHttpClient
 {
+    const CLIENT_TIMEOUT = 5;
     /**
      * @var resource
      */
@@ -29,6 +30,7 @@ class CurlHttpClient
             CURLOPT_RETURNTRANSFER => true,
             CURLINFO_HEADER_OUT    => true,
             CURLOPT_POST           => true,
+            CURLOPT_TIMEOUT        => self::CLIENT_TIMEOUT,
             CURLOPT_POSTFIELDS     => json_encode($params),
             CURLOPT_HTTPHEADER     => $headers,
         ]);

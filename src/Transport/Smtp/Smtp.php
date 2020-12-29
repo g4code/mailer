@@ -24,7 +24,7 @@ class Smtp implements TransportInterface
 
         try {
             $transport->send(ZendMessageFacade::convert($message));
-        } catch (\Zend\Mail\Transport\Exception\RuntimeException $e) {
+        } catch (\Zend\Mail\Exception\RuntimeException $e) {
             throw new SmtpEmailNotSentException($e->getMessage(), $e->getCode());
         }
     }
