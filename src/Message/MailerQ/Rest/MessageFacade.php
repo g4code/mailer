@@ -49,11 +49,11 @@ class MessageFacade
 
         return new Message($body, $headers, $url);
     }
-    
+
     private static function getEnvelope($string)
     {
         preg_match("/[\._a-zA-Z0-9-]+@[\._a-zA-Z0-9-]+/i", $string, $matches);
-        return $matches[0];
+        return $matches ? $matches[0] : $string;
     }
 
     private static function getTags($headers)
