@@ -15,7 +15,7 @@ class MessageFacade
     public static function convert(\G4\Mailer\Message $message, array $options)
     {
         $body = [
-            'envelope'  => $message->getFrom(),
+            'envelope'  => self::getEnvelope($message->getFrom()),
             'recipient' => is_array($message->getTo())? $message->getTo()[0] : $message->getTo(),
             'tags'    => self::getTags($message->getHeaders()),
             'inlinecss' => true,
@@ -48,6 +48,12 @@ class MessageFacade
         $url = $options['params']['url'];
 
         return new Message($body, $headers, $url);
+    }
+
+    private static function getEnvelope($string)
+    {
+        preg_match("/[\._a-zA-Z0-9-]+@[\._a-zA-Z0-9-]+/i", $string, $matches);
+        return $matches ? $matches[0] : htmlspecialchars($string);
     }
 
     private static function getTags($headers)
