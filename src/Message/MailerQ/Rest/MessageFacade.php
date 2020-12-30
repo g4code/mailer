@@ -53,6 +53,7 @@ class MessageFacade
     private static function getEnvelope($string)
     {
         preg_match("/[\._a-zA-Z0-9-]+@[\._a-zA-Z0-9-]+/i", $string, $matches);
+        
         return $matches ? $matches[0] : $string;
     }
 
