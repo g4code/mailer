@@ -6,6 +6,7 @@ class MessageFacade
 {
     const HEADER_MAILERQ_LOGID = 'x-nd-mailerlogid';
     const HEADER_LIST_UNSUBSCRIBE = 'List-Unsubscribe';
+    const FEEDBACK_ID = 'Feedback-ID';
 
     /**
      * @param \G4\Mailer\Message $message
@@ -37,6 +38,12 @@ class MessageFacade
 
         if ($message->getListUnsubscribe()) {
             $body['mime']['headers'][self::HEADER_LIST_UNSUBSCRIBE] = $message->getListUnsubscribe();
+        }
+
+        $messageHeaders = $message->getHeaders();
+
+        if (array_key_exists(self::FEEDBACK_ID, $messageHeaders)) {
+            $body['mime']['headers'][self::FEEDBACK_ID] = $messageHeaders[self::FEEDBACK_ID];
         }
 
         $headers = [
