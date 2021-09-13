@@ -204,6 +204,18 @@ class Message
         return $this->logId ?: null;
     }
 
+    public function overrideSenderDomain($senderDomain)
+    {
+        if (empty($senderDomain)) {
+            return;
+        }
+        $this->from = preg_replace(
+            '/([^<]*)<([^@]*)@([^>]*)>/',
+            '$1<$2@' . $senderDomain . '>',
+            $this->from
+        );
+    }
+
     /**
      * @param array $options Array of email or href that is used to unsubscribe user
      */
