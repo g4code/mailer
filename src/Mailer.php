@@ -3,6 +3,7 @@
 namespace G4\Mailer;
 
 use G4\Mailer\Transport\Amazon\AmazonSes;
+use G4\Mailer\Transport\Mailgun\Rest\Mailgun;
 use G4\Mailer\Transport\Smtp\Smtp;
 use G4\Mailer\Transport\MailerQ\Rest\MailerQ;
 use G4\Mailer\Transport\TransportInterface;
@@ -34,6 +35,7 @@ class Mailer implements  MailerInterface
             case 'smtp';         $transport = new Smtp($options); break;
             case 'amazon_ses';   $transport = new AmazonSes($options); break;
             case 'mailerq_rest'; $transport = new MailerQ($options); break;
+            case 'mailgun_rest'; $transport = new Mailgun($options); break;
             default:
                 throw new \Exception("Mail delivery not defined");
         }
