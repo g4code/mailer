@@ -15,7 +15,6 @@ class MailgunCurlHttpClient
      * Send POST curl http request to provided url with provided params and headers
      *
      * @param array $params
-     * @param array $headers
      * @param string $url
      * @param string $token
      *
@@ -41,17 +40,15 @@ class MailgunCurlHttpClient
         $error = $this->error();
         $this->close();
 
-        if ($error) {
-            throw new \RuntimeException(sprintf("cURL Error #: %s\n", $error));
+        if (!empty($error) || !strpos($result, 'Queued.')) {
+            throw new \RuntimeException(sprintf("cURL Error #: %s\n", $result));
         }
 
-        $response = json_decode($result, true);
-
-        if (!$response) {
+        try {
+            return json_decode($result, true, 512, JSON_THROW_ON_ERROR);
+        } catch (\Exception $e) {
             throw new \RuntimeException(sprintf('Empty response from %s', $url));
         }
-
-        return $response;
     }
 
     /**

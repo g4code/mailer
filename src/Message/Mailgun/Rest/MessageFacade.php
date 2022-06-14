@@ -15,11 +15,12 @@ class MessageFacade
             'from' => $message->getFrom(),
             'to' => is_array($message->getTo()) ? $message->getTo()[0] : $message->getTo(),
             'subject' => $message->getSubject(),
-            'text' => $message->getTextBody()
+            'text' => $message->getTextBody(),
+            'html' => $message->getHtmlBody(),
         ];
 
-        $url = $options['url'];
-        $token = $options['token'];
+        $url = sprintf($options['params']['url'], $options['params']['domain']);
+        $token = $options['params']['token'];
 
         return new Message($body, $url, $token);
     }

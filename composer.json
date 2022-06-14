@@ -27,7 +27,9 @@
     "phpunit/phpunit": "3.7.*"
   },
   "require": {
-    "php": ">=5.6",
+    "php": "^7.3",
+    "ext-json": "*",
+    "ext-curl": "*",
     "zendframework/zend-mail": "2.10.*",
     "zendframework/zend-servicemanager": "2.7.*"
   }
