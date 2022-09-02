@@ -53,7 +53,7 @@ class MessageFacade
         ];
 
         if (isset($options[self::PARAMS][self::SMARTHOST])) {
-            $body[self::MIME][self::SMARTHOST] = $options[self::PARAMS][self::SMARTHOST];
+            $body[self::SMARTHOST] = $options[self::PARAMS][self::SMARTHOST];
         }
 
         if ($message->getLogId()) {
