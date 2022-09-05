@@ -26,6 +26,7 @@ class MessageFacade
     const TO = 'to';
     const TOKEN = 'token';
     const URL = 'url';
+    const POOL = 'pool';
     const X_NZ_TAGS = 'X-NZ-Tags';
 
     /**
@@ -54,6 +55,10 @@ class MessageFacade
 
         if (isset($options[self::PARAMS][self::SMARTHOST])) {
             $body[self::SMARTHOST] = $options[self::PARAMS][self::SMARTHOST];
+        }
+
+        if (isset($options[self::PARAMS][self::POOL])) {
+            $body[self::POOL] = $options[self::PARAMS][self::POOL];
         }
 
         if ($message->getLogId()) {
