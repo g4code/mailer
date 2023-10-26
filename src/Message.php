@@ -2,7 +2,6 @@
 
 namespace G4\Mailer;
 
-
 class Message
 {
     /**
@@ -19,7 +18,7 @@ class Message
      * @var array
      */
     private $bcc;
-    
+
     /**
      * @var array
      */
@@ -72,7 +71,7 @@ class Message
     {
         return $this->bcc;
     }
-    
+
     /**
      * @return array
      */
@@ -80,7 +79,7 @@ class Message
     {
         return $this->headers;
     }
-    
+
     /**
      * @return bool
      */
@@ -159,7 +158,7 @@ class Message
         $this->bcc[] = $recipient;
         return $this;
     }
-    
+
     /**
      * @param $header
      * @return $this
@@ -169,7 +168,7 @@ class Message
         $this->headers[] = $header;
         return $this;
     }
-    
+
     /**
      * @param array $headers
      * @return $this

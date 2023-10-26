@@ -2,34 +2,29 @@
 
 namespace G4\Mailer\Message;
 
-
-class ZendMessageFacade
+class LaminasMessageFacade
 {
     const ENCODING  = 'utf-8';
     const TYPE_HTML = 'text/html';
     const TYPE_TEXT = 'text/plain';
 
-    /**
-     * @param \G4\Mailer\Message $message
-     * @return \Zend\Mail\Message
-     */
-    public static function convert(\G4\Mailer\Message $message)
+    public static function convert(\G4\Mailer\Message $message): \Laminas\Mail\Message
     {
-        $htmlPart = new \Zend\Mime\Part($message->getHtmlBody());
+        $htmlPart = new \Laminas\Mime\Part($message->getHtmlBody());
         $htmlPart->charset = self::ENCODING;
         $htmlPart->type = self::TYPE_HTML;
-        $htmlPart->encoding = \Zend\Mime\Mime::ENCODING_QUOTEDPRINTABLE;
+        $htmlPart->encoding = \Laminas\Mime\Mime::ENCODING_QUOTEDPRINTABLE;
 
-        $textPart = new \Zend\Mime\Part($message->getTextBody());
+        $textPart = new \Laminas\Mime\Part($message->getTextBody());
         $textPart->charset = self::ENCODING;
         $textPart->type = self::TYPE_TEXT;
-        $textPart->encoding = \Zend\Mime\Mime::ENCODING_QUOTEDPRINTABLE;
+        $textPart->encoding = \Laminas\Mime\Mime::ENCODING_QUOTEDPRINTABLE;
 
-        $body = new \Zend\Mime\Message();
+        $body = new \Laminas\Mime\Message();
         $body->setParts([$textPart, $htmlPart]);
 
-        $zendMessage = new \Zend\Mail\Message();
-        $zendMessage
+        $laminasMessage = new \Laminas\Mail\Message();
+        $laminasMessage
             ->addTo($message->getTo())
             ->addFrom(
                 self::getEmailPart($message->getFrom()),
@@ -45,22 +40,22 @@ class ZendMessageFacade
             ->getHeaders()->get('content-type')->setType('multipart/alternative');
 
         if (count($message->getCc())) {
-            $zendMessage->addCc($message->getCc());
+            $laminasMessage->addCc($message->getCc());
         }
         if (count($message->getBcc())) {
-            $zendMessage->addBcc($message->getBcc());
+            $laminasMessage->addBcc($message->getBcc());
         }
         if ($message->getReplyTo()) {
-            $zendMessage->setReplyTo(
+            $laminasMessage->setReplyTo(
                 self::getEmailPart($message->getReplyTo()),
                 self::getNamePart($message->getReplyTo())
             );
         }
         if ($message->hasHeaders()) {
-            $zendMessage->getHeaders()->addHeaders($message->getHeaders());
+            $laminasMessage->getHeaders()->addHeaders($message->getHeaders());
         }
 
-        return $zendMessage;
+        return $laminasMessage;
     }
 
     private static function getEmailPart($from)
