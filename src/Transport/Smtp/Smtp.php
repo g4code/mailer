@@ -3,8 +3,10 @@
 namespace G4\Mailer\Transport\Smtp;
 
 use G4\Mailer\Exception\SmtpEmailNotSentException;
-use G4\Mailer\Message\ZendMessageFacade;
+use G4\Mailer\Message;
+use G4\Mailer\Message\LaminasMessageFacade;
 use G4\Mailer\Transport\TransportInterface;
+use Laminas\Mail\Transport\SmtpOptions;
 
 class Smtp implements TransportInterface
 {
@@ -15,16 +17,16 @@ class Smtp implements TransportInterface
         $this->setOptions($options);
     }
 
-    public function send(\G4\Mailer\Message $message)
+    public function send(Message $message)
     {
-        $options = new \Zend\Mail\Transport\SmtpOptions($this->options);
+        $options = new SmtpOptions($this->options);
 
         // todo adapter will instantiate transport other than smtp
-        $transport = new \Zend\Mail\Transport\Smtp($options);
+        $transport = new \Laminas\Mail\Transport\Smtp($options);
 
         try {
-            $transport->send(ZendMessageFacade::convert($message));
-        } catch (\Zend\Mail\Exception\RuntimeException $e) {
+            $transport->send(LaminasMessageFacade::convert($message));
+        } catch (\Laminas\Mail\Exception\RuntimeException $e) {
             throw new SmtpEmailNotSentException($e->getMessage(), $e->getCode());
         }
     }
